@@ -9,7 +9,7 @@ const ProgressBar = ({ title, value, maxValue }) => {
       <dd className='flex items-center mb-3'>
         <div className='w-full bg-gray-200 rounded h-2.5 dark:bg-gray-700 mr-2'>
           <div
-            className='bg-blue-600 h-2.5 rounded dark:bg-blue-500'
+            className='bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700 h-2.5 rounded dark:bg-blue-500'
             style={{ width: `${progress}%` }}
           />
         </div>

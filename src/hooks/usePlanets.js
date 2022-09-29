@@ -1,17 +1,18 @@
 import { useEffect } from 'react'
-import useLocalStorage from './useLocalStorage'
 import { getPlanets } from '../services/getPlanets'
+import { useGlobalStore } from '../store/context'
 
 const usePlanets = () => {
-  const [planets, setPlanets] = useLocalStorage('planets')
+  const globalStore = useGlobalStore()
 
   useEffect(() => {
-    if (!planets) {
-      getPlanets().then(setPlanets)
-    }
+    getPlanets().then(response => {
+      globalStore.setPlanets({
+        nextPage: getPlanets,
+        ...response
+      })
+    })
   }, [])
-
-  return planets || []
 }
 
 export default usePlanets
