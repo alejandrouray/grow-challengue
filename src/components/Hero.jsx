@@ -1,20 +1,34 @@
-import ReactLogo from './../assets/svg/react.svg'
-import TailwindCSSLogo from './../assets/svg/tailwindcss.svg'
-import Vite from './../assets/svg/vitejs.svg'
+import Icon from './Icon'
+import ButtonIcon from './ButtonIcon'
 
 const Hero = () => (
-  <div className='grid text-center pt-28'>
+  <div className='grid justify-items-center pt-28 text-center'>
     <h1 className='pt-4 mx-auto mb-4 text-5xl bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700 bg-clip-text text-transparent xs:text-[2rem] sm:text-[6rem] lg:text-[8rem]'>
-      Star Wars Finder
+      Star Wars Explorer
     </h1>
     <h4 className='text-[1rem] md:text-[1.5rem] lg:text-[2rem] font-bold text-white'>
       Grow Frontend Engineering Evaluation
     </h4>
+
     <div className='xs:hidden flex justify-self-center pt-8 text-left gap-x-8'>
-      <img src={TailwindCSSLogo} alt='Tailwind CSS Logo' className='w-16 sm:w-20 lg:w-32' />
-      <img src={ReactLogo} alt='React Logo' className='w-16 sm:w-20 lg:w-32' />
-      <img src={Vite} alt='Vite Logo' className='w-16 sm:w-20 lg:w-32' />
+      <Icon filename='tailwindcss.svg' title='Tailwind CSS' />
+      <Icon filename='react.svg' title='React' />
+      <Icon filename='vitejs.svg' title='Vite' />
     </div>
+
+    <ButtonIcon
+      className='my-8'
+      text='Code Source'
+      color='bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700'
+      icon={{
+        filename: 'github.svg',
+        title: 'GitHub',
+        className: 'w-12'
+      }}
+    />
+    <h5 className='text-white lg:leading-10 text-lg mobiles:mt-0 mobilest:mt-12 xs:text-[1rem] sm:text-[1.5rem] lg:text-[2rem] lg:px-80'>
+      Fear is the path to the Dark Side. Fear leads to anger, anger leads to hate, hate leads to suffering. i sense much fear in you.
+    </h5>
   </div>
 )
 
