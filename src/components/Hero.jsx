@@ -3,7 +3,7 @@ import ButtonIcon from './ButtonIcon'
 
 const Hero = () => (
   <div className='grid justify-items-center pt-28 text-center'>
-    <h1 className='pt-4 mx-auto mb-4 text-5xl bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700 bg-clip-text text-transparent xs:text-[2rem] sm:text-[6rem] lg:text-[8rem]'>
+    <h1 className='pt-4 mx-auto mb-4 text-5xl bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700 bg-clip-text text-transparent xs:text-[2rem] sm:text-[6rem] xl:text-[8rem]'>
       Star Wars Explorer
     </h1>
     <h4 className='text-[1rem] md:text-[1.5rem] lg:text-[2rem] font-bold text-white'>
@@ -28,7 +28,7 @@ const Hero = () => (
       }}
     />
 
-    <h5 className='text-white lg:leading-10 text-lg mobiles:mt-0 mobilest:mt-12 xs:text-[1rem] sm:text-[1.5rem] lg:text-[2rem] lg:px-80'>
+    <h5 className='text-white lg:leading-10 text-lg mobiles:mt-0 mobilest:mt-12 xs:text-[1rem] sm:text-[1.5rem] lg:text-[2rem] px-5 lg:px-40'>
       Fear is the path to the Dark Side. Fear leads to anger, anger leads to hate, hate leads to suffering. i sense much fear in you.
     </h5>
   </div>
