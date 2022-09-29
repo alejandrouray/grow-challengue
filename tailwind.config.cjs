@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'hero-pattern': "url('./src/assets/hero-pattern.jpeg')"
+        'hero-pattern': "url('hero-pattern.jpeg')"
       },
       fontFamily: {
         jedi: ['Star Jedi']

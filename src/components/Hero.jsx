@@ -17,6 +17,7 @@ const Hero = () => (
     </div>
 
     <ButtonIcon
+      link='https://github.com/alejandrouray/grow-challengue'
       className='my-8'
       text='Code Source'
       color='bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700'
@@ -26,6 +27,7 @@ const Hero = () => (
         className: 'w-12'
       }}
     />
+
     <h5 className='text-white lg:leading-10 text-lg mobiles:mt-0 mobilest:mt-12 xs:text-[1rem] sm:text-[1.5rem] lg:text-[2rem] lg:px-80'>
       Fear is the path to the Dark Side. Fear leads to anger, anger leads to hate, hate leads to suffering. i sense much fear in you.
     </h5>
