@@ -5,9 +5,10 @@ export default function createGlobalStore () {
       results: [],
       next: null,
       page: 1,
-      last: false
+      last: false,
+      count: 0
     },
-    setPlanets ({ nextPage, results, next, page = 1, last }) {
+    setPlanets ({ nextPage, results, next, page = 1, last, count }) {
       this.planets = {
         nextPage: () => {
           const {
@@ -61,7 +62,8 @@ export default function createGlobalStore () {
         },
         next,
         page,
-        last
+        last,
+        count: count || this.planets.count
       }
     }
   }
