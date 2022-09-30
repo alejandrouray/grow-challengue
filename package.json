@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ramonak/react-progress-bar": "^5.0.2",
     "mobx": "^6.6.2",
     "mobx-react": "^7.5.3",
     "mobx-react-lite": "^3.4.0",

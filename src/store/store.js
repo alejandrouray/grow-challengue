@@ -2,11 +2,11 @@ export default function createGlobalStore () {
   return {
     planets: {
       nextPage: () => {},
-      results: [],
+      results: {},
       next: null,
       page: 1,
       last: false,
-      count: 0
+      count: undefined
     },
     setPlanets ({ nextPage, results, next, page = 1, last, count }) {
       this.planets = {
@@ -18,14 +18,16 @@ export default function createGlobalStore () {
           } = this.planets
 
           const hasStored = storedResults[storedPage + 1]
+          const followingPage = page + 1
+          const lastPage = count / storedResults[storedPage].length
 
           if (hasStored) {
             this.setPlanets({
               ...this.planets,
               nextPage: () => nextPage(storedNext),
               results: null,
-              page: page + 1,
-              last: page + 1 === Number(storedNext.at(-1))
+              page: followingPage,
+              last: followingPage === lastPage
             })
           } else {
             nextPage(this.planets.next)
@@ -65,6 +67,22 @@ export default function createGlobalStore () {
         last,
         count: count || this.planets.count
       }
+    },
+    jumpToPage (page) {
+      const { results, page: storedPage, count } = this.planets
+      const lastPage = count / results[storedPage]?.length
+
+      this.planets = {
+        ...this.planets,
+        page,
+        nextPage: () => this.jumpToPage(this.planets.page + 1),
+        previousPage: () => this.jumpToPage(this.planets.page - 1),
+        last: page === lastPage
+      }
+    },
+    search: '',
+    setSearch (search) {
+      this.search = search
     }
   }
 }
