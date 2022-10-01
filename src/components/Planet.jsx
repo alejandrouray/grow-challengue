@@ -2,11 +2,12 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Icon from './Icon'
 import ProgressBar from './ProgressBar'
+import formatPopulation from '../utils/formatPopulation'
 
 const Planet = ({ className = '', planet, maxSurfaceWater }) => {
   const { id, name, surface_water: surfaceWater, population = 0 } = planet
 
-  const formattedPopulation = population !== 'unknown' ? new Intl.NumberFormat('en-US').format(Number(population)) : population
+  const formattedPopulation = formatPopulation(population)
   const progressValue = isNaN(Number(surfaceWater)) ? 0 : Number(surfaceWater)
 
   return (

@@ -16,8 +16,8 @@ module.exports = {
       },
       screens: {
         xs: { max: '300px' },
-        mobiles: '320px',
-        mobilest: '375px',
+        mobiles: { min: '320px', max: '374px' },
+        mobilem: { min: '375px', max: '639px' },
         prevsm: { max: '640px' },
         ...defaultTheme.screens
       }

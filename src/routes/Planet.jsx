@@ -6,10 +6,13 @@ import { useGlobalStore } from '../store/context'
 import getTotalPlanets from '../utils/getTotalPlanets'
 import { getPlanet } from '../services/planets'
 
+import PlanetTabs from '../components/PlanetTabs'
+
 const Planet = observer(() => {
   const { planetId } = useParams()
   const globalStore = useGlobalStore()
-  const { planet, planets, setPlanet } = globalStore
+
+  const { planets, setPlanet } = globalStore
 
   const getPlanetFromStore = (storedPlanets = {}) => {
     const planets = getTotalPlanets(storedPlanets.results)
@@ -26,9 +29,9 @@ const Planet = observer(() => {
   }, [globalStore])
 
   return (
-    <div className='text-white'>
-      {planet && <span>Planet {planet.name}</span>}
-    </div>
+    <>
+      <PlanetTabs />
+    </>
   )
 })
 

@@ -29,7 +29,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <GlobalProvider>
-    <div className='min-h-screen px-4 lg:px-16 xl:px-48 bg-center bg-contain font-jedi bg-hero-pattern'>
+    <div className='min-h-screen px-4 pb-16 lg:px-16 xl:px-48 bg-center bg-contain font-jedi bg-hero-pattern'>
       <RouterProvider router={router} />
     </div>
   </GlobalProvider>

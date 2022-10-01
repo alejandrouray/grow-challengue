@@ -11,7 +11,7 @@ const Pagination = ({
   title
 }) => {
   return (
-    <div className='flex flex-col items-center pb-10'>
+    <div className='flex flex-col items-center'>
       <span className='text-sm text-white'>
         Showing page <span className='font-semibold text-yellow-300'>{page} </span>
         / <span className='font-semibold text-yellow-300'>{totalPages} </span>

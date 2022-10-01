@@ -4,13 +4,13 @@ const addPlanetId = (response, type = 'multiple') => {
   return type === 'multiple'
     ? ({
         results: response.results.map(planet => ({
-          ...planet,
-          id: setIdByUrl(planet)
+          id: setIdByUrl(planet),
+          ...planet
         }))
       })
     : ({
-        ...response,
-        id: setIdByUrl(response)
+        id: setIdByUrl(response),
+        ...response
       })
 }
 

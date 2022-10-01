@@ -28,7 +28,7 @@ const Hero = () => (
       }}
     />
 
-    <h5 className='text-white lg:leading-10 text-lg mobiles:mt-0 mobilest:mt-12 xs:text-[1rem] sm:text-[1.5rem] lg:text-[2rem] px-5 lg:px-40'>
+    <h5 className='text-white lg:leading-10 text-lg mobiles:mt-0 mobilem:mt-12 xs:text-[1rem] sm:text-[1.5rem] lg:text-[2rem] px-5 lg:px-40'>
       Fear is the path to the Dark Side. Fear leads to anger, anger leads to hate, hate leads to suffering. i sense much fear in you.
     </h5>
   </div>
