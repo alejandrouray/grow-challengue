@@ -8,6 +8,8 @@ export default function createGlobalStore () {
       last: false,
       count: undefined
     },
+    search: '',
+
     setPlanets ({ nextPage, results, next, page = 1, last, count }) {
       this.planets = {
         nextPage: () => {
@@ -21,34 +23,25 @@ export default function createGlobalStore () {
           const followingPage = page + 1
           const lastPage = count / storedResults[storedPage].length
 
-          if (hasStored) {
-            this.setPlanets({
+          return hasStored
+            ? this.setPlanets({
               ...this.planets,
               nextPage: () => nextPage(storedNext),
               results: null,
               page: followingPage,
               last: followingPage === lastPage
             })
-          } else {
-            nextPage(this.planets.next)
+            : nextPage(this.planets.next)
               .then(response => {
-                const {
-                  next: nextFetched,
-                  previous: previousFetched
-                } = response
-
                 this.setPlanets({
                   ...response,
                   nextPage: () => nextPage(this.planets.next),
-                  page: nextFetched ? nextFetched.at(-1) - 1 : Number(previousFetched.at(-1)) + 1,
-                  ...(!nextFetched
-                    ? { next: this.planets.next, last: true }
-                    : { last: false }
-                  )
+                  page: this.planets.page + 1,
+                  last: !response.next
                 })
               })
-          }
         },
+
         previousPage: () => {
           this.setPlanets({
             ...this.planets,
@@ -58,16 +51,19 @@ export default function createGlobalStore () {
             last: false
           })
         },
+
         results: {
           ...this.planets.results,
           ...(results && { [page]: results })
         },
+
         next,
         page,
         last,
         count: count || this.planets.count
       }
     },
+
     jumpToPage (page) {
       const { results, page: storedPage, count } = this.planets
       const lastPage = count / results[storedPage]?.length
@@ -80,7 +76,7 @@ export default function createGlobalStore () {
         last: page === lastPage
       }
     },
-    search: '',
+
     setSearch (search) {
       this.search = search
     }

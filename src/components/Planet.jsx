@@ -13,7 +13,7 @@ const Planet = ({ className = '', title, population = 0, maxSurfaceWater, surfac
         <div className='grid gap-y-6 items-center'>
           <div className='flex gap-x-1'>
             <Icon filename='group.svg' title='Population' className='w-5' />
-            <span className='text-1xl font-bold text-gray-900 dark:text-white'>{formattedPopulation}</span>
+            <span className='text-1xl font-bold text-gray-900'>{formattedPopulation}</span>
           </div>
           <ProgressBar
             title='Surface Water'

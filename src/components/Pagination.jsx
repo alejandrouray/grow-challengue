@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import toggleLoading from '../utils/toggleLoading'
 
 const Pagination = ({
   page,
@@ -8,35 +9,37 @@ const Pagination = ({
   nextPage,
   previousPage = () => {},
   title
-}) => (
-  <div className='flex flex-col items-center pb-10'>
-    <span className='text-sm text-white'>
-      Showing page <span className='font-semibold text-yellow-300'>{page} </span>
-      / <span className='font-semibold text-yellow-300'>{totalPages} </span>
-      of <span className='font-semibold text-yellow-300 '>{count} </span>
-      {title}
-    </span>
-    <div className='inline-flex mt-2 xs:mt-0'>
-      {page > 1 && (
-        <button
-          onClick={previousPage}
-          className='py-2 px-4 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900'
-        >
-          Prev
-        </button>
-      )}
-      {!last && (
-        <button
-          onClick={nextPage}
-          className='py-2 px-4 text-sm font-medium text-white bg-gray-800 rounded-r border-0 border-l border-gray-700 hover:bg-gray-900'
-          value='Next'
-        >
-          Next
-        </button>
-      )}
+}) => {
+  return (
+    <div className='flex flex-col items-center pb-10'>
+      <span className='text-sm text-white'>
+        Showing page <span className='font-semibold text-yellow-300'>{page} </span>
+        / <span className='font-semibold text-yellow-300'>{totalPages} </span>
+        of <span className='font-semibold text-yellow-300 '>{count} </span>
+        {title}
+      </span>
+      <div className='inline-flex mt-2 xs:mt-0'>
+        {page > 1 && (
+          <button
+            onClick={previousPage}
+            className='py-2 px-4 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900'
+          >
+            Prev
+          </button>
+        )}
+
+        {!last && (
+          <button
+            onClick={(e) => toggleLoading(e, nextPage)}
+            className='py-2 px-4 text-sm font-medium text-white bg-gray-800 rounded-r border-0 border-l border-gray-700 hover:bg-gray-900'
+          >
+            Next
+          </button>
+        )}
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 Pagination.propTypes = {
   title: PropTypes.string.isRequired,

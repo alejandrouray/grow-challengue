@@ -13,8 +13,15 @@ const PlanetList = observer(() => {
   const { results, page, count, ...propsToPagination } = planets
 
   const totalPlanets = getTotalPlanets(results)
-  const currentResults = !search ? (results[page] || []) : totalPlanets.filter(planet => planet.name.toLowerCase().includes(search.toLowerCase()))
-  const totalPages = count / currentResults.length
+  const currentResults = !search
+    ? (results[page] || [])
+    : totalPlanets.filter(planet => {
+      const planetName = planet.name.toLowerCase()
+      return planetName.includes(search.toLowerCase())
+    })
+
+  const foundPlanets = currentResults.length
+  const totalPages = count / foundPlanets
   const maxSurfaceWater = getMaxSurfaceWater(results)
 
   const progress = (totalPlanets.length * 100) / count
@@ -24,8 +31,7 @@ const PlanetList = observer(() => {
     <div className='grid justify-items-center pb-6 pt-12'>
       <Search
         placeholder='Enter a Planet Name'
-        disabled={loading}
-        completed={progress === 100}
+        loading={loading}
       />
 
       {loading && (
@@ -41,19 +47,23 @@ const PlanetList = observer(() => {
       )}
 
       {!loading && (
-        <div className='pt-20 pb-10 grid grid-cols-1 gap-6 w-full xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4'>
-          {currentResults.map(planet => (
-            <Planet
-              key={planet.url}
-              title={planet.name}
-              population={planet.population}
-              surfaceWater={Number(planet.surface_water)}
-              maxSurfaceWater={maxSurfaceWater}
-            />))}
-        </div>
+        foundPlanets
+          ? (
+            <div className='pt-20 pb-10 grid grid-cols-1 gap-6 w-full xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4'>
+              {currentResults.map(planet => (
+                <Planet
+                  key={planet.url}
+                  title={planet.name}
+                  population={planet.population}
+                  surfaceWater={Number(planet.surface_water)}
+                  maxSurfaceWater={maxSurfaceWater}
+                />
+              ))}
+            </div>)
+          : <h4 className='text-red-400 text-lg text-center py-12'>{search && 'No planets were found! :('}</h4>
       )}
 
-      {!search && currentResults.length && (
+      {!search && foundPlanets && (
         <Pagination
           {...propsToPagination}
           title='Planets'
