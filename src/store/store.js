@@ -1,3 +1,5 @@
+import addPlanetId from '../utils/addPlanetId'
+
 export default function createGlobalStore () {
   return {
     planets: {
@@ -9,6 +11,7 @@ export default function createGlobalStore () {
       count: undefined
     },
     search: '',
+    planet: '',
 
     setPlanets ({ nextPage, results, next, page = 1, last, count }) {
       this.planets = {
@@ -35,6 +38,7 @@ export default function createGlobalStore () {
               .then(response => {
                 this.setPlanets({
                   ...response,
+                  ...addPlanetId(response),
                   nextPage: () => nextPage(this.planets.next),
                   page: this.planets.page + 1,
                   last: !response.next
@@ -79,6 +83,10 @@ export default function createGlobalStore () {
 
     setSearch (search) {
       this.search = search
+    },
+
+    setPlanet (planet) {
+      this.planet = addPlanetId(planet, 'single')
     }
   }
 }

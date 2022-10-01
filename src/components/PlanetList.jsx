@@ -53,10 +53,8 @@ const PlanetList = observer(() => {
               {currentResults.map(planet => (
                 <Planet
                   key={planet.url}
-                  title={planet.name}
-                  population={planet.population}
-                  surfaceWater={Number(planet.surface_water)}
                   maxSurfaceWater={maxSurfaceWater}
+                  planet={planet}
                 />
               ))}
             </div>)

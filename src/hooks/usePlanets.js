@@ -1,20 +1,26 @@
 import { useEffect } from 'react'
-import { getPlanets } from '../services/getPlanets'
+import { getPlanets } from '../services/planets'
 import { useGlobalStore } from '../store/context'
 import getTotalPlanets from '../utils/getTotalPlanets'
+import addPlanetId from '../utils/addPlanetId'
 
 const usePlanets = ({ getAll = false, active = true, search = false } = {}) => {
   const globalStore = useGlobalStore()
   const { planets, setPlanets, setSearch } = globalStore
 
+  const setPlanetsFromAPI = (response, withPage) => {
+    setPlanets({
+      nextPage: getPlanets,
+      ...response,
+      ...addPlanetId(response),
+      ...(withPage && { page: globalStore.planets.page + 1 })
+    })
+  }
+
   const getAllPlanets = async (next) => {
     const response = await getPlanets(next)
 
-    setPlanets({
-      nextPage: getPlanets,
-      page: globalStore.planets.page + 1,
-      ...response
-    })
+    setPlanetsFromAPI(response, getAll)
 
     if (response.next) {
       return getAllPlanets(response.next)
@@ -30,12 +36,7 @@ const usePlanets = ({ getAll = false, active = true, search = false } = {}) => {
       getAll && search
         ? getAllPlanets(planets.next)
         : getPlanets()
-          .then(response => {
-            setPlanets({
-              nextPage: getPlanets,
-              ...response
-            })
-          })
+          .then(response => setPlanetsFromAPI(response, (getAll && search)))
     }
   }, [search, active])
 
