@@ -1,15 +1,15 @@
-const addEntityId = (response, type = 'multiple') => {
-  const setIdByUrl = (entity) => entity?.url?.split('/').at(-2)
+import getIdByUrl from './getIdByUrl'
 
+const addEntityId = (response, type = 'multiple') => {
   return type === 'multiple'
     ? ({
         results: response.map(entity => ({
-          id: setIdByUrl(entity),
+          id: getIdByUrl(entity.url),
           ...entity
         }))
       })
     : ({
-        id: setIdByUrl(response),
+        id: getIdByUrl(response.url),
         ...response
       })
 }

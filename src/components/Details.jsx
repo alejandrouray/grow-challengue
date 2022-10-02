@@ -3,17 +3,19 @@ import { useGlobalStore } from '../store/context'
 import formatPopulation from '../utils/formatPopulation'
 import Property from './Property'
 
-const PlanetDetails = observer(() => {
+const Details = observer(({ entityKey, exceptions = [] }) => {
   const globalStore = useGlobalStore()
-  const { planet } = globalStore
-  const { films, created, edited, url, ...restProps } = planet
+  // const { planet } = globalStore
+
+  const entity = globalStore[entityKey]
+  const properties = Object.entries(entity).filter(([key]) => !exceptions.includes(key))
+
+  // const { films, created, edited, url, ...restProps } = planet
 
   const formatters = {
     population: formatPopulation,
     residents: (residents) => residents.length
   }
-
-  const properties = Object.entries(restProps)
 
   return (
     <div
@@ -35,4 +37,4 @@ const PlanetDetails = observer(() => {
   )
 })
 
-export default PlanetDetails
+export default Details

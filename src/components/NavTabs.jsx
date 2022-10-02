@@ -1,26 +1,9 @@
+import PropTypes from 'prop-types'
 import { useState } from 'react'
 import Tab from './Tab'
-import PlanetDetails from './PlanetDetails'
-import PlanetResidents from './PlanetResidents'
 
-const PlanetTabs = () => {
+const NavTabs = ({ tabs = [] }) => {
   const [tab, setTab] = useState('Details')
-
-  const tabs = [
-    {
-      title: 'Details',
-      Component: PlanetDetails
-    },
-    {
-      title: 'Residents',
-      Component: PlanetResidents,
-      className: 'md:block lg:grid lg:grid-cols-12 justify-center'
-    },
-    {
-      title: 'Films',
-      Component: () => <h2>Films</h2>
-    }
-  ]
 
   return (
     <div className='w-full bg-white rounded-lg border shadow-md'>
@@ -35,7 +18,7 @@ const PlanetTabs = () => {
         ))}
       </ul>
 
-      {tabs.map(({ title, Component, className = '' }) => (
+      {tabs.map(({ title, Component, className = '', props = {} }) => (
         <div
           key={title}
           className={
@@ -44,11 +27,20 @@ const PlanetTabs = () => {
             ${className}`
           }
         >
-          <Component />
+          <Component {...props} />
         </div>
       ))}
     </div>
   )
 }
 
-export default PlanetTabs
+NavTabs.propTypes = {
+  tabs: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    Component: PropTypes.any.isRequired,
+    className: PropTypes.string,
+    props: PropTypes.object
+  }))
+}
+
+export default NavTabs

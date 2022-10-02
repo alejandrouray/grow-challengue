@@ -41,7 +41,7 @@ const Breadcrumb = observer(() => {
                     to={`/${route}/${entity.id}`}
                     className='ml-1 text-sm font-medium text-gray-700 hover:text-yellow-500 md:ml-2'
                   >
-                    {entity.name.toLowerCase()}
+                    {entity?.name?.toLowerCase()}
                   </Link>
                 </div>
               </li>

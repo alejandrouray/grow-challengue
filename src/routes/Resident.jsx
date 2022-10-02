@@ -2,28 +2,50 @@ import { useEffect } from 'react'
 import { useGlobalStore } from '../store/context'
 import { useParams } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
-import { getResident } from '../services/residents'
+
+import { populateResident } from '../services/residents'
+import { getPlanet } from '../services/planets'
+
+import getIdByUrl from '../utils/getIdByUrl'
+import getPlanetFromStore from '../utils/getPlanetFromStore'
+
+import NavTabs from '../components/NavTabs'
+import setTabsByEntity from '../utils/setTabsByEntity'
 
 const Resident = observer(() => {
   const { residentId } = useParams()
   const globalStore = useGlobalStore()
 
-  const { planet, setResident } = globalStore
+  const {
+    planet,
+    resident,
+    planets,
+    setPlanet,
+    setResident
+  } = globalStore
 
-  const getResidentFromStore = (storedPlanet = {}) => {
-    const resident = storedPlanet?.residents?.find(resident => resident.id === residentId)
-    resident && setResident(resident)
-
-    return resident
-  }
+  const tabs = setTabsByEntity({ entity: 'resident', resident })
 
   useEffect(() => {
-    getResidentFromStore(planet) ??
-    getResident(residentId).then(setResident)
-  }, [globalStore])
+    const planetId = getIdByUrl(resident?.homeworld)
+
+    if (planetId && !planet) {
+      (getPlanetFromStore({ planets, setPlanet, planetId }) ??
+      getPlanet(planetId).then(setPlanet))
+    }
+
+    if (!resident) {
+      const fetchResident = async () => {
+        const populatedResident = await populateResident(residentId)
+        setResident(populatedResident)
+      }
+
+      fetchResident().catch(console.error)
+    }
+  }, [resident, planet])
 
   return (
-    <h1 className='text-white'>Resident {residentId} </h1>
+    <NavTabs tabs={tabs} />
   )
 })
 
