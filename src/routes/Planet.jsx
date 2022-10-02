@@ -28,11 +28,7 @@ const Planet = observer(() => {
     getPlanet(planetId).then(setPlanet)
   }, [globalStore])
 
-  return (
-    <>
-      <PlanetTabs />
-    </>
-  )
+  return <PlanetTabs />
 })
 
 export default Planet

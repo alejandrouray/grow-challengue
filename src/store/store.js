@@ -1,4 +1,4 @@
-import addPlanetId from '../utils/addPlanetId'
+import addEntityId from '../utils/addEntityId'
 
 export default function createGlobalStore () {
   return {
@@ -12,6 +12,7 @@ export default function createGlobalStore () {
     },
     search: '',
     planet: '',
+    resident: '',
 
     setPlanets ({ nextPage, results, next, page = 1, last, count }) {
       this.planets = {
@@ -38,7 +39,7 @@ export default function createGlobalStore () {
               .then(response => {
                 this.setPlanets({
                   ...response,
-                  ...addPlanetId(response),
+                  ...addEntityId(response.results),
                   nextPage: () => nextPage(this.planets.next),
                   page: this.planets.page + 1,
                   last: !response.next
@@ -87,9 +88,13 @@ export default function createGlobalStore () {
 
     setPlanet (planet, otherValues = {}) {
       this.planet = {
-        ...addPlanetId(planet, 'single'),
+        ...addEntityId(planet, 'single'),
         ...otherValues
       }
+    },
+
+    setResident (resident) {
+      this.resident = addEntityId(resident, 'single')
     }
   }
 }

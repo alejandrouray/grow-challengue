@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { getPlanets } from '../services/planets'
 import { useGlobalStore } from '../store/context'
 import getTotalPlanets from '../utils/getTotalPlanets'
-import addPlanetId from '../utils/addPlanetId'
+import addEntityId from '../utils/addEntityId'
 
 const usePlanets = ({ getAll = false, active = true, search = false } = {}) => {
   const globalStore = useGlobalStore()
@@ -12,7 +12,7 @@ const usePlanets = ({ getAll = false, active = true, search = false } = {}) => {
     setPlanets({
       nextPage: getPlanets,
       ...response,
-      ...addPlanetId(response),
+      ...addEntityId(response.results),
       ...(withPage && { page: globalStore.planets.page + 1 })
     })
   }

@@ -1,60 +1,54 @@
 import { useState } from 'react'
 import Tab from './Tab'
-import { useGlobalStore } from '../store/context'
 import PlanetDetails from './PlanetDetails'
-import { observer } from 'mobx-react-lite'
 import PlanetResidents from './PlanetResidents'
 
-const PlanetTabs = observer(() => {
+const PlanetTabs = () => {
   const [tab, setTab] = useState('Details')
-  const globalStore = useGlobalStore()
-  const { planet } = globalStore
 
-  const tabs = ['Details', 'Residents', 'Films']
+  const tabs = [
+    {
+      title: 'Details',
+      Component: PlanetDetails
+    },
+    {
+      title: 'Residents',
+      Component: PlanetResidents,
+      className: 'md:block lg:grid lg:grid-cols-12 justify-center'
+    },
+    {
+      title: 'Films',
+      Component: () => <h2>Films</h2>
+    }
+  ]
 
   return (
     <div className='w-full bg-white rounded-lg border shadow-md'>
-      <ul
-        className='flex flex-wrap justify-start mobiles:justify-center text-sm text-gray-500 bg-gray-50 rounded-t-lg border-b border-gray-200 font-medium text-center'
-        role='tablist'
-      >
-        {tabs.map(tabTitle => (
+      <ul className='flex flex-wrap justify-start mobiles:justify-center text-sm text-gray-500 bg-gray-50 rounded-t-lg border-b border-gray-200 font-medium text-center'>
+        {tabs.map(({ title }) => (
           <Tab
-            key={tabTitle}
-            title={tabTitle}
+            key={title}
+            title={title}
             tab={tab}
             setTab={setTab}
           />
         ))}
       </ul>
-      <div
-        className={`${tab === 'Details' ? '' : 'hidden'} p-4 bg-white rounded-lg md:p-8`}
-        role='tabpanel'
-      >
-        <PlanetDetails />
-      </div>
-      <div>
+
+      {tabs.map(({ title, Component, className = '' }) => (
         <div
-          className={`${tab === 'Residents' ? '' : 'hidden'} p-4 md:block lg:grid lg:grid-cols-12 justify-center bg-white rounded-lg md:p-8`}
-          id='about'
-          role='tabpanel'
-          aria-labelledby='about-tab'
+          key={title}
+          className={
+            `${tab !== title && 'hidden md:hidden lg:hidden'}
+            p-4 bg-white rounded-lg md:p-8
+            ${className}`
+          }
         >
-          <PlanetResidents />
+          <Component />
         </div>
-      </div>
-      <div>
-        <div
-          className={`${tab === 'Films' ? '' : 'hidden'} p-4 bg-white rounded-lg md:p-8`}
-          id='about'
-          role='tabpanel'
-          aria-labelledby='about-tab'
-        >
-          <h2>Films</h2>
-        </div>
-      </div>
+      ))}
     </div>
   )
-})
+}
 
 export default PlanetTabs

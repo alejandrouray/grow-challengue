@@ -9,6 +9,7 @@ import Home from './routes/Home'
 import NotFound from './routes/NotFound'
 import Planet from './routes/Planet'
 import Breadcrumb from './components/Breadcrumb'
+import Resident from './routes/Resident'
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,15 @@ const router = createBrowserRouter([
       <>
         <Breadcrumb />
         <Planet />
+      </>
+    )
+  },
+  {
+    path: 'residents/:residentId',
+    element: (
+      <>
+        <Breadcrumb />
+        <Resident />
       </>
     )
   }

@@ -1,8 +1,9 @@
+import { observer } from 'mobx-react-lite'
 import { useGlobalStore } from '../store/context'
 import formatPopulation from '../utils/formatPopulation'
 import Property from './Property'
 
-const PlanetDetails = () => {
+const PlanetDetails = observer(() => {
   const globalStore = useGlobalStore()
   const { planet } = globalStore
   const { films, created, edited, url, ...restProps } = planet
@@ -32,6 +33,6 @@ const PlanetDetails = () => {
       </dl>
     </div>
   )
-}
+})
 
 export default PlanetDetails
