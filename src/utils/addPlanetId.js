@@ -1,5 +1,5 @@
 const addPlanetId = (response, type = 'multiple') => {
-  const setIdByUrl = (planet) => planet.url.at(-2)
+  const setIdByUrl = (planet) => planet?.url?.at(-2)
 
   return type === 'multiple'
     ? ({

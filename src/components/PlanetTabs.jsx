@@ -3,6 +3,7 @@ import Tab from './Tab'
 import { useGlobalStore } from '../store/context'
 import PlanetDetails from './PlanetDetails'
 import { observer } from 'mobx-react-lite'
+import PlanetResidents from './PlanetResidents'
 
 const PlanetTabs = observer(() => {
   const [tab, setTab] = useState('Details')
@@ -34,12 +35,12 @@ const PlanetTabs = observer(() => {
       </div>
       <div>
         <div
-          className={`${tab === 'Residents' ? '' : 'hidden'} p-4 bg-white rounded-lg md:p-8`}
+          className={`${tab === 'Residents' ? '' : 'hidden'} p-4 md:block lg:grid lg:grid-cols-12 justify-center bg-white rounded-lg md:p-8`}
           id='about'
           role='tabpanel'
           aria-labelledby='about-tab'
         >
-          <h2>Residents</h2>
+          <PlanetResidents />
         </div>
       </div>
       <div>

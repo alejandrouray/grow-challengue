@@ -85,8 +85,11 @@ export default function createGlobalStore () {
       this.search = search
     },
 
-    setPlanet (planet) {
-      this.planet = addPlanetId(planet, 'single')
+    setPlanet (planet, otherValues = {}) {
+      this.planet = {
+        ...addPlanetId(planet, 'single'),
+        ...otherValues
+      }
     }
   }
 }
