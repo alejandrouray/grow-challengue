@@ -58,7 +58,11 @@ const PlanetList = observer(() => {
                 />
               ))}
             </div>)
-          : <h4 className='text-red-400 text-lg text-center py-12'>{search && 'No planets were found! :('}</h4>
+          : (
+            <h4 className='text-red-400 text-lg text-center py-12'>
+              {search && 'No planets were found! :('}
+            </h4>
+            )
       )}
 
       {!search && foundPlanets && (

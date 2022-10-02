@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types'
 import toggleLoading from '../utils/toggleLoading'
+import { observer } from 'mobx-react-lite'
+import { useGlobalStore } from '../store/context'
 
-const Pagination = ({
+const Pagination = observer(({
   page,
   totalPages,
   count,
@@ -10,6 +12,13 @@ const Pagination = ({
   previousPage = () => {},
   title
 }) => {
+  const globalStore = useGlobalStore()
+  const { planets } = globalStore
+
+  const updateCachedValue = () => {
+    planets.saveInLocalStorage(globalStore.planets)
+  }
+
   return (
     <div className='flex flex-col items-center'>
       <span className='text-sm text-white'>
@@ -21,7 +30,10 @@ const Pagination = ({
       <div className='inline-flex mt-2 xs:mt-0'>
         {page > 1 && (
           <button
-            onClick={previousPage}
+            onClick={() => {
+              previousPage()
+              updateCachedValue()
+            }}
             className='py-2 px-4 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900'
           >
             Prev
@@ -30,7 +42,10 @@ const Pagination = ({
 
         {!last && (
           <button
-            onClick={(e) => toggleLoading(e, nextPage)}
+            onClick={async (e) => {
+              toggleLoading(e, nextPage)
+              updateCachedValue()
+            }}
             className='py-2 px-4 text-sm font-medium text-white bg-gray-800 rounded-r border-0 border-l border-gray-700 hover:bg-gray-900'
           >
             Next
@@ -39,7 +54,7 @@ const Pagination = ({
       </div>
     </div>
   )
-}
+})
 
 Pagination.propTypes = {
   title: PropTypes.string.isRequired,
