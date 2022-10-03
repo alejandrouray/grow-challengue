@@ -68,7 +68,8 @@ const setTabsByEntity = ({ entity, planet, resident }) => {
                 main: 'name',
                 subtitle: 'manufacturer',
                 right: 'pilots'
-              }
+              },
+              hidden: !resident?.vehicles?.length
             }
           ]
         },

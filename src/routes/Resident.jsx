@@ -25,6 +25,7 @@ const Resident = observer(() => {
   } = globalStore
 
   const tabs = setTabsByEntity({ entity: 'resident', resident })
+  const isResidentOk = !(!resident || resident.id !== residentId)
 
   useEffect(() => {
     const planetId = getIdByUrl(resident?.homeworld)
@@ -34,7 +35,7 @@ const Resident = observer(() => {
       getPlanet(planetId).then(setPlanet))
     }
 
-    if (!resident) {
+    if (!isResidentOk) {
       const fetchResident = async () => {
         const populatedResident = await populateResident(residentId)
         setResident(populatedResident)
@@ -45,7 +46,7 @@ const Resident = observer(() => {
   }, [resident, planet])
 
   return (
-    <NavTabs tabs={tabs} />
+    <NavTabs tabs={tabs} loading={!isResidentOk} />
   )
 })
 

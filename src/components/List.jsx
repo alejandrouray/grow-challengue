@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite'
 const List = observer(({ title, items = [], keys = {}, className = '' }) => {
   const { main, subtitle, right } = keys
 
-  if (!items.length) return <span className='text-red-400'>No data were found for this entity :(</span>
+  if (!items.length) return <span className='text-red-400 lg:col-start-5 lg:col-end-10'>No data were found for this entity :(</span>
 
   return (
     <div className={`p-4 w-90 rounded-lg border shadow-md sm:p-8 lg:col-start-4 lg:col-end-10 bg-gray-800 border-gray-700 ${className}`}>

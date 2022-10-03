@@ -4,10 +4,11 @@ import List from './List'
 const ListCollection = ({ lists = [] }) => {
   return (
     lists.map(list => (
-      <List
-        key={list.title}
-        {...list}
-      />
+      !list.hidden && (
+        <List
+          key={list.title}
+          {...list}
+        />)
     ))
   )
 }

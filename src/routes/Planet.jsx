@@ -68,7 +68,7 @@ const Planet = observer(() => {
   }
 
   useEffect(() => {
-    if (!planet || isLoding) {
+    if (!planet || isLoding || !checkPopulated(planet)) {
       setCachedAndStore()
     }
   }, [planet])
