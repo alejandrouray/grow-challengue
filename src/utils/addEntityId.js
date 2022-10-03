@@ -9,7 +9,7 @@ const addEntityId = (response, type = 'multiple') => {
         }))
       })
     : ({
-        id: getIdByUrl(response.url),
+        id: getIdByUrl(response?.url),
         ...response
       })
 }

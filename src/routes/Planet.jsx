@@ -3,43 +3,82 @@ import { useParams } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 
 import { useGlobalStore } from '../store/context'
-
 import { getPlanet } from '../services/planets'
-import { getResidentsByPlanet } from '../services/residents'
 
-import getPlanetFromStore from '../utils/getPlanetFromStore'
-import addEntityId from '../utils/addEntityId'
 import setTabsByEntity from '../utils/setTabsByEntity'
-
+import populatePlanet from '../utils/populatePlanet'
+import useLocalStorage from '../hooks/useLocalStorage'
 import NavTabs from '../components/NavTabs'
+
+const findPlanetById = (planets, id) => {
+  if (!planets) return
+  return Object.values(planets).flat().find(planet => planet.id === id)
+}
 
 const Planet = observer(() => {
   const { planetId } = useParams()
   const globalStore = useGlobalStore()
+  const [cachedPlanets] = useLocalStorage('planets')
+  const [cachedPlanet, saveInLocalStorage] = useLocalStorage('planet')
 
-  const { planet, planets, setPlanet } = globalStore
+  const { planet, setPlanet } = globalStore
 
-  const residentsPopulated = planet.residents
-    ?.every(resident => typeof resident === 'object')
+  const cachedPlanetPrev = findPlanetById(cachedPlanets?.results, planetId)
+  const tabs = setTabsByEntity({ entity: 'planet', planet })
+  const isLoding = planet.id !== planetId
+
+  const checkPopulated = (entity) =>
+    entity.residents?.every(resident => typeof resident === 'object')
+
+  const getPlanetFromAPI = () => {
+    getPlanet(planetId)
+      .then(response => populatePlanet({
+        entity: response,
+        setPlanet,
+        saveInLocalStorage
+      }))
+  }
+
+  const checkCachedEntity = (entity) => {
+    const entityIsOk = entity.id === planetId
+
+    if (entityIsOk) {
+      const isPopulated = checkPopulated(entity || {})
+
+      isPopulated
+        ? setPlanet(entity)
+        : populatePlanet({ entity, setPlanet, saveInLocalStorage })
+
+      return false
+    }
+
+    getPlanetFromAPI()
+  }
+
+  const setCachedAndStore = () => {
+    if (cachedPlanet) {
+      checkCachedEntity(cachedPlanet)
+    }
+
+    if (!cachedPlanet) {
+      cachedPlanetPrev
+        ? checkCachedEntity(cachedPlanetPrev)
+        : getPlanetFromAPI()
+    }
+  }
 
   useEffect(() => {
-    if (planet && !residentsPopulated) {
-      getResidentsByPlanet(planet.residents)
-        .then(residents => {
-          const { results } = addEntityId(residents)
-          setPlanet(planet, { residents: results })
-        })
+    if (!planet || isLoding) {
+      setCachedAndStore()
     }
   }, [planet])
 
-  const tabs = setTabsByEntity({ entity: 'planet', planet })
-
-  useEffect(() => {
-    getPlanetFromStore({ planets, setPlanet, planetId }) ??
-    getPlanet(planetId).then(setPlanet)
-  }, [globalStore])
-
-  return <NavTabs tabs={tabs} />
+  return (
+    <NavTabs
+      tabs={tabs}
+      loading={isLoding}
+    />
+  )
 })
 
 export default Planet

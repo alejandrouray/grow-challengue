@@ -5,12 +5,9 @@ import Property from './Property'
 
 const Details = observer(({ entityKey, exceptions = [] }) => {
   const globalStore = useGlobalStore()
-  // const { planet } = globalStore
 
   const entity = globalStore[entityKey]
   const properties = Object.entries(entity).filter(([key]) => !exceptions.includes(key))
-
-  // const { films, created, edited, url, ...restProps } = planet
 
   const formatters = {
     population: formatPopulation,

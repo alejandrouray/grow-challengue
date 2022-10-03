@@ -11,7 +11,6 @@ const Search = ({ placeholder = '', loading }) => {
   usePlanets({ search })
 
   useEffect(() => {
-    console.log({ search, localSearch, loading })
     if (!localSearch && search) jumpToPage(1)
     !loading && setSearch(localSearch)
   }, [loading, localSearch])

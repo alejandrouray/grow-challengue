@@ -109,6 +109,8 @@ export default function createGlobalStore () {
         ...addEntityId(planet, 'single'),
         ...otherValues
       }
+
+      return { ...this.planet }
     },
 
     setResident (resident) {

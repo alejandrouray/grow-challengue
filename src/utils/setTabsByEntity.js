@@ -14,7 +14,7 @@ const setTabsByEntity = ({ entity, planet, resident }) => {
         }
       },
       {
-        title: 'Addional info',
+        title: 'Additional info',
         Component: List,
         props: {
           items: planet?.residents,
